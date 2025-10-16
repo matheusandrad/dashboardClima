@@ -7,10 +7,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
-    <a type="button" class="btn btn-primary" onclick="carregarJSON()">clique aqui para carregar o arquivo JSON</a>
-    <h2 id="nome"></h2>
-    <h2 id="idade"></h2>
-    <h3 id="cidade"></h3>
+    <a type="button" class="btn btn-primary" onclick="consumirAPI()">clique aqui para consumir a API</a>
+    <h2 id="temperatura"></h2>
+    <h2 id="sensacao"></h2>
+    <h3 id="dia"></h3>
+    <h3 id="horarioLeitura"></h3>
+    <h4 id="coordenadas"></h4>
     
     <script>
         function carregarJSON () {
@@ -28,6 +30,58 @@
             })
         }
 
+        function consumirAPI () {
+            fetch('https://api.open-meteo.com/v1/forecast?latitude=-29.7009&longitude=-52.4354&daily=daylight_duration,sunshine_duration,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,rain_sum&current=temperature_2m,is_day,apparent_temperature,rain,wind_speed_10m,wind_direction_10m,relative_humidity_2m,showers,precipitation,weather_code,surface_pressure,pressure_msl,wind_gusts_10m&timezone=America%2FSao_Paulo&forecast_days=1')
+            .then(response => response.json())          // Passo 1: Pega os dados da API
+            .then(clima => {                            // Passo 2: Recebe os dados na variável "clima" | "clima" é uma variável que existe somente dentro desse .then
+                console.log("generationtime_ms: " + clima.generationtime_ms);   
+
+                atualizaCoordenadas(clima);             // Passo 3: Chama a função e envia "clima" como parâmetro
+                atualizaTemperatura (clima);
+                atualizaHorarioLeitura (clima);
+                atualizaSensacaoTermica (clima);
+                atualizaSeEDia (clima);
+
+            })
+            .catch(erro => {
+                console.error("Erro ao carregar os dados da API: ", erro);
+            })
+        }
+
+        function atualizaCoordenadas (clima) {          // Passo 4: Função recebe o parâmetro "clima" que foi enviado no passo 3
+            document.getElementById('coordenadas').textContent = `Coordenadas: ${clima.latitude} ${clima.longitude}`;
+        }
+
+        function atualizaTemperatura (clima) {
+            document.getElementById('temperatura').textContent = `Temperatura atual: ${clima.current.temperature_2m} °C`;
+        }
+
+        function atualizaHorarioLeitura (clima) {
+
+            let dataStr = clima.current.time;
+            let data = new Date(dataStr);
+
+            document.getElementById('horarioLeitura').textContent = `Horário da última leitura: ${data.toLocaleString()}`;
+
+            console.log(`${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()} ${data.getHours()}:${data.getMinutes()}`);
+
+        }
+
+        function atualizaSensacaoTermica (clima) {
+            document.getElementById('sensacao').textContent = `Sensação térmica: ${clima.current.apparent_temperature} °C`;
+        }
+
+        function atualizaSeEDia (clima) {
+            if (clima.current.is_day > 0)  {
+                    ehDia = "Sim"
+                    console.log(ehDia);
+                } else {
+                    ehDia = "Não"
+                    console.log(ehDia);
+                }
+
+                document.getElementById('dia').textContent = `É dia?: ${ehDia}`;
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
