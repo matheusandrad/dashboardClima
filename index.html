@@ -13,10 +13,22 @@
     
     <script>
         function botao() {
-            let clique = "clicou";
+            let clique = dados.nome + " | " + dados.idade;
             document.getElementById("botao").innerHTML = clique;
-            console.log("click");
         }
+    </script>
+    <script>
+        dados = ""
+
+        fetch('dados.json')
+            .then(response => response.json())
+            .then(dados => {
+                console.log(dados.nome);
+                console.log(dados.cidade);
+            })
+            .catch(erro => {
+                console.error("Erro ao carregar o JSON:", erro);
+            })
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
