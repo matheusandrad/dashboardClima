@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PT-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,28 +7,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
-    <h1 id="botao"></h1>
-    <a type="button" class="btn btn-primary" onclick="botao()">clique aqui</a>
-    <h2></h2>
+    <a type="button" class="btn btn-primary" onclick="carregarJSON()">clique aqui para carregar o arquivo JSON</a>
+    <h2 id="nome"></h2>
+    <h2 id="idade"></h2>
+    <h3 id="cidade"></h3>
     
     <script>
-        function botao() {
-            let clique = dados.nome + " | " + dados.idade;
-            document.getElementById("botao").innerHTML = clique;
-        }
-    </script>
-    <script>
-        dados = ""
-
-        fetch('dados.json')
-            .then(response => response.json())
-            .then(dados => {
+        function carregarJSON () {
+            fetch('dados.json')                                             // Esse "fetch" lê o arquivo JSON
+            .then(response => response.json())                              // Converte o texto em um objeto
+            .then(dados => {                                                // Aqui o objeto já foi criado
                 console.log(dados.nome);
                 console.log(dados.cidade);
+                document.getElementById('nome').textContent = "Nome: " + dados.nome;   // Aqui ele substitui a tag com id 'texto' pelo conteúdo do objeto "dados" com o valor contido em "nome"
+                document.getElementById('idade').textContent = "Idade: " + dados.idade;
+                document.getElementById('cidade').textContent = "Cidade: " + dados.cidade;
             })
             .catch(erro => {
                 console.error("Erro ao carregar o JSON:", erro);
             })
+        }
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
