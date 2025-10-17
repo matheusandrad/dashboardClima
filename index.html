@@ -4,21 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard do clima</title>
+    <link rel="icon" type="image/x-icon" href="/cloud.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto Serif' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Rock Salt' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Coral+Pixels&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <script src="scripts.js"></script>
+
+    <style>
+        body {
+            font-family: 'Outfit';
+            background-color: #7fa58b;  /* cor de fundo do body */
+        }
+        nav {
+            background-color: #a8d0b4;  /* cor da navbar */
+        }
+
+        .corCards {
+            background-color: #a8d0b4;  /* cor dos cards */
+        }
+        
+    </style>
+    
 </head>
 <body>
 
     <!-- <a type="button" class="btn btn-primary" onclick="consumirAPI()">clique aqui para consumir a API</a> -->
-    <h2 id="temperatura"></h2>
-    <h2 id="sensacao"></h2>
-    <h2 id="chovendo"></h2>
-    <h2 id="dia"></h2>
-    <h2 id="horarioLeitura"></h2>
-    <h2 id="coordenadas"></h2>
-    <h2 id="velVento"></h2>
-    <h2 id="dirVento"></h2>
-    <h2 id="umidadeAr"></h2>
-    <h2 id="pressaoAr"></h2>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <span class="navbar-brand m-2" style="font-family: Rock Salt;">Clima</span>
+        </div>
+    </nav>
+
+    <!-- Cards -->
+    <div class="row g-3 m-2">
+        <div class="col-sm-6 col-lg-4">
+            <div class="card corCards h-100 d-flex flex-column">
+                <div class="card-header"><i class="bi bi-clouds me-2"></i>Temperatura</div>
+                <div class="card-body">
+                    <h5 id="temperatura"></h5>
+                    <h5 id="temperature_2m_max"></h5>
+                    <h5 id="temperature_2m_min"></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="card corCards h-100 d-flex flex-column">
+                <div class="card-header">Sensação Térmica</div>
+                <div class="card-body">
+                    <h5 id="sensacao"></h5>
+                    <h5 id="apparent_temperature_max"></h5>
+                    <h5 id="apparent_temperature_min"></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="card corCards h-100 d-flex flex-column">
+                <div class="card-header">Chuva</div>
+                <div class="card-body">
+                    <h5 id="chovendo"></h5>
+                    <h5 id="rain_sum"></h5>
+                    <h5 id="dia"></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="card corCards h-100 d-flex flex-column">
+                <div class="card-header">Vento</div>
+                <div class="card-body">
+                    <h5 id="velVento"></h5>
+                    <h5 id="dirVento"></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="card corCards h-100 d-flex flex-column">
+                <div class="card-header">Ar</div>
+                <div class="card-body">
+                    <h5 id="umidadeAr"></h5>
+                    <h5 id="pressaoAr"></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4 ">
+            <div class="card corCards h-100 d-flex flex-column">
+                <div class="card-header">Outros</div>
+                <div class="card-body">
+                    <h5 id="coordenadas"></h5>
+                    <h5 id="daylight_duration"></h5>
+                    <h5 id="horarioLeitura"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer" class="text-end p-2 text-body-tertiary"></footer>
     
 
     <script>
@@ -26,124 +112,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             consumirAPI();
         });
-    </script>
-    <script>
-        function carregarJSON () {
-            fetch('dados.json')                                             // Esse "fetch" lê o arquivo JSON
-            .then(response => response.json())                              // Converte o texto em um objeto
-            .then(dados => {                                                // Aqui o objeto já foi criado
-                console.log(dados.nome);
-                console.log(dados.cidade);
-                document.getElementById('nome').textContent = "Nome: " + dados.nome;   // Aqui ele substitui a tag com id 'texto' pelo conteúdo do objeto "dados" com o valor contido em "nome"
-                document.getElementById('idade').textContent = "Idade: " + dados.idade;
-                document.getElementById('cidade').textContent = "Cidade: " + dados.cidade;
-            })
-            .catch(erro => {
-                console.error("Erro ao carregar o JSON:", erro);
-            })
-        }
-
-        function consumirAPI () {
-            fetch('https://api.open-meteo.com/v1/forecast?latitude=-29.7009&longitude=-52.4354&daily=daylight_duration,sunshine_duration,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,rain_sum&current=temperature_2m,is_day,apparent_temperature,rain,wind_speed_10m,wind_direction_10m,relative_humidity_2m,showers,precipitation,weather_code,surface_pressure,pressure_msl,wind_gusts_10m&timezone=America%2FSao_Paulo&forecast_days=1')
-            .then(response => response.json())          // Passo 1: Pega os dados da API
-            .then(clima => {                            // Passo 2: Recebe os dados na variável "clima" | "clima" é uma variável que existe somente dentro desse .then
-                console.log("generationtime_ms: " + clima.generationtime_ms);   
-
-                atualizaCoordenadas(clima);             // Passo 3: Chama a função e envia "clima" como parâmetro
-                atualizaTemperatura (clima);
-                atualizaHorarioLeitura (clima);
-                atualizaSensacaoTermica (clima);
-                atualizaSeEDia (clima);
-                atualizaChuvaAtual(clima);
-                atualizaVelVento(clima);
-                atualizaDirVento(clima);
-                atualizaUmidadeAr(clima);
-                atualizaPressaoAr(clima);
-
-            })
-            .catch(erro => {
-                console.error("Erro ao carregar os dados da API: ", erro);
-            })
-        }
-
-        function atualizaCoordenadas (clima) {          // Passo 4: Função recebe o parâmetro "clima" que foi enviado no passo 3
-            document.getElementById('coordenadas').textContent = `Coordenadas: ${clima.latitude} ${clima.longitude}`;
-        }
-
-        function atualizaTemperatura (clima) {
-            document.getElementById('temperatura').textContent = `Temperatura atual: ${clima.current.temperature_2m} °C`;
-        }
-
-        function atualizaHorarioLeitura (clima) {
-
-            let dataStr = clima.current.time;
-            let data = new Date(dataStr);
-
-            document.getElementById('horarioLeitura').textContent = `Horário da última leitura: ${data.toLocaleString()}`;
-
-            console.log(`${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()} ${data.getHours()}:${data.getMinutes()}`);
-
-        }
-
-        function atualizaSensacaoTermica (clima) {
-            document.getElementById('sensacao').textContent = `Sensação térmica: ${clima.current.apparent_temperature} °C`;
-        }
-
-        function atualizaSeEDia (clima) {
-            if (clima.current.is_day > 0)  {
-                    ehDia = "Sim"
-                    console.log(ehDia);
-                } else {
-                    ehDia = "Não"
-                    console.log(ehDia);
-                }
-
-                document.getElementById('dia').textContent = `É dia?: ${ehDia}`;
-        }
-
-        function atualizaChuvaAtual(clima) {
-            let chuva = clima.current.rain;
-            let chovendo = (chuva > 0) ? "Sim" : "Não";
-            document.getElementById('chovendo').textContent = `Está chovendo? ${chovendo}`;
-        }
-
-        function atualizaVelVento(clima) {
-            document.getElementById('velVento').textContent = `Velocidade do vento: ${clima.current.wind_speed_10m} km/h`
-        }
-
-        function atualizaDirVento(clima) {
-            document.getElementById('dirVento').textContent = `Direção do vento: ${clima.current.wind_direction_10m}°`
-        }
-
-        function atualizaUmidadeAr(clima) {
-            document.getElementById('umidadeAr').textContent = `Úmidade relativa do ar: ${clima.current.relative_humidity_2m}%`
-        }
-
-        function atualizaPressaoAr(clima) {
-            document.getElementById('pressaoAr').textContent = `Pressão do ar: ${clima.current.surface_pressure} hPa`
-        }
-
-        /*
-        CURRENT: atuais
-        atualizaCoordenadas(clima); OK 
-        temperature_2m atualizaTemperatura (clima); OK 
-        time atualizaHorarioLeitura (clima); OK 
-        apparent_temperature atualizaSensacaoTermica (clima); OK 
-        is_day atualizaSeEDia (clima); OK 
-        rain atualizaChuvaAtual(clima); OK
-        wind_speed_10m atualizaVelVento(clima); OK 
-        wind_direction_10m atualizaDirVento(clima); OK
-        relative_humidity_2m atualizaUmidadeAr(clima); OK
-        surface_pressure atualizaPressaoAr(clima); OK
-
-        DAILY: diárias
-        daylight_duration é em segundos atualizaDuracaoDia(clima);
-        temperature_2m_max atualizaTemperaturaMax(clima);
-        temperature_2m_min atualizaTemperaturaMin(clima);
-        apparent_temperature_max atualizaSensacaoMax(clima);
-        apparent_temperature_min atualizaSensacaoMin(clima);
-        rain_sum (em mm) atualizaSomaChuva(clima);
-        */
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
