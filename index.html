@@ -7,13 +7,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
-    <a type="button" class="btn btn-primary" onclick="consumirAPI()">clique aqui para consumir a API</a>
+
+    <!-- <a type="button" class="btn btn-primary" onclick="consumirAPI()">clique aqui para consumir a API</a> -->
     <h2 id="temperatura"></h2>
     <h2 id="sensacao"></h2>
-    <h3 id="dia"></h3>
-    <h3 id="horarioLeitura"></h3>
-    <h4 id="coordenadas"></h4>
+    <h2 id="chovendo"></h2>
+    <h2 id="dia"></h2>
+    <h2 id="horarioLeitura"></h2>
+    <h2 id="coordenadas"></h2>
+    <h2 id="velVento"></h2>
+    <h2 id="dirVento"></h2>
+    <h2 id="umidadeAr"></h2>
+    <h2 id="pressaoAr"></h2>
     
+
+    <script>
+        // Chama a função assim que o HTML é carregado
+        document.addEventListener("DOMContentLoaded", function() {
+            consumirAPI();
+        });
+    </script>
     <script>
         function carregarJSON () {
             fetch('dados.json')                                             // Esse "fetch" lê o arquivo JSON
@@ -41,6 +54,11 @@
                 atualizaHorarioLeitura (clima);
                 atualizaSensacaoTermica (clima);
                 atualizaSeEDia (clima);
+                atualizaChuvaAtual(clima);
+                atualizaVelVento(clima);
+                atualizaDirVento(clima);
+                atualizaUmidadeAr(clima);
+                atualizaPressaoAr(clima);
 
             })
             .catch(erro => {
@@ -82,6 +100,50 @@
 
                 document.getElementById('dia').textContent = `É dia?: ${ehDia}`;
         }
+
+        function atualizaChuvaAtual(clima) {
+            let chuva = clima.current.rain;
+            let chovendo = (chuva > 0) ? "Sim" : "Não";
+            document.getElementById('chovendo').textContent = `Está chovendo? ${chovendo}`;
+        }
+
+        function atualizaVelVento(clima) {
+            document.getElementById('velVento').textContent = `Velocidade do vento: ${clima.current.wind_speed_10m} km/h`
+        }
+
+        function atualizaDirVento(clima) {
+            document.getElementById('dirVento').textContent = `Direção do vento: ${clima.current.wind_direction_10m}°`
+        }
+
+        function atualizaUmidadeAr(clima) {
+            document.getElementById('umidadeAr').textContent = `Úmidade relativa do ar: ${clima.current.relative_humidity_2m}%`
+        }
+
+        function atualizaPressaoAr(clima) {
+            document.getElementById('pressaoAr').textContent = `Pressão do ar: ${clima.current.surface_pressure} hPa`
+        }
+
+        /*
+        CURRENT: atuais
+        atualizaCoordenadas(clima); OK 
+        temperature_2m atualizaTemperatura (clima); OK 
+        time atualizaHorarioLeitura (clima); OK 
+        apparent_temperature atualizaSensacaoTermica (clima); OK 
+        is_day atualizaSeEDia (clima); OK 
+        rain atualizaChuvaAtual(clima); OK
+        wind_speed_10m atualizaVelVento(clima); OK 
+        wind_direction_10m atualizaDirVento(clima); OK
+        relative_humidity_2m atualizaUmidadeAr(clima); OK
+        surface_pressure atualizaPressaoAr(clima); OK
+
+        DAILY: diárias
+        daylight_duration é em segundos atualizaDuracaoDia(clima);
+        temperature_2m_max atualizaTemperaturaMax(clima);
+        temperature_2m_min atualizaTemperaturaMin(clima);
+        apparent_temperature_max atualizaSensacaoMax(clima);
+        apparent_temperature_min atualizaSensacaoMin(clima);
+        rain_sum (em mm) atualizaSomaChuva(clima);
+        */
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
