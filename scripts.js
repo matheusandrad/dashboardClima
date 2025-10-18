@@ -86,7 +86,31 @@ function atualizaVelVento(clima) {
 }
 
 function atualizaDirVento(clima) {
-    document.getElementById('dirVento').textContent = `Direção do vento: ${clima.current.wind_direction_10m}°`;
+
+    direcaoDoVento = clima.current.wind_direction_10m;
+
+    if (direcaoDoVento >= 0 && direcaoDoVento <= 22.5) {
+        direcaoDoVento = "N";
+    } else if (direcaoDoVento >= 22.6 && direcaoDoVento <= 67.5) {
+        direcaoDoVento = "NE";
+    } else if (direcaoDoVento >= 67.6 && direcaoDoVento <= 112.5) {
+        direcaoDoVento = "L";
+    } else if (direcaoDoVento >= 112.6 && direcaoDoVento <= 157.5) {
+        direcaoDoVento = "SE";
+    } else if (direcaoDoVento >= 157.6 && direcaoDoVento <= 202.5) {
+        direcaoDoVento = "S";
+    } else if (direcaoDoVento >= 202.6 && direcaoDoVento <= 247.5) {
+        direcaoDoVento = "SO";
+    } else if (direcaoDoVento >= 247.6 && direcaoDoVento <= 292.5) {
+        direcaoDoVento = "O";
+    } else if (direcaoDoVento >= 292.6 && direcaoDoVento <= 337.5) {
+        direcaoDoVento = "SO";
+    } else if (direcaoDoVento >= 337.6 && direcaoDoVento <= 360) {
+        direcaoDoVento = "N";
+    }
+
+    document.getElementById('dirVento').textContent = `Direção do vento: ${clima.current.wind_direction_10m}° ${direcaoDoVento}`;
+
 }
 
 function atualizaUmidadeAr(clima) {
