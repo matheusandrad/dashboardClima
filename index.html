@@ -23,7 +23,6 @@
         nav {
             background-color: #a8d0b4;  /* cor da navbar */
         }
-
         .corCards {
             background-color: #a8d0b4;  /* cor dos cards */
         }
@@ -46,7 +45,7 @@
     <div class="row g-3 m-2">
         <div class="col-sm-6 col-lg-4">
             <div class="card corCards h-100 d-flex flex-column">
-                <div class="card-header"><i class="bi bi-clouds me-2"></i>Temperatura</div>
+                <div class="card-header"><i class="bi bi-thermometer me-2"></i>Temperatura</div>
                 <div class="card-body">
                     <h5 id="temperatura"></h5>
                     <h5 id="temperature_2m_max"></h5>
@@ -56,7 +55,7 @@
         </div>
         <div class="col-sm-6 col-lg-4">
             <div class="card corCards h-100 d-flex flex-column">
-                <div class="card-header">Sensação Térmica</div>
+                <div class="card-header"><i class="bi bi-moisture me-2"></i>Sensação Térmica</div>
                 <div class="card-body">
                     <h5 id="sensacao"></h5>
                     <h5 id="apparent_temperature_max"></h5>
@@ -66,7 +65,7 @@
         </div>
         <div class="col-sm-6 col-lg-4">
             <div class="card corCards h-100 d-flex flex-column">
-                <div class="card-header">Chuva</div>
+                <div class="card-header"><i class="bi bi-cloud-rain-fill me-2"></i>Chuva</div>
                 <div class="card-body">
                     <h5 id="chovendo"></h5>
                     <h5 id="rain_sum"></h5>
@@ -76,7 +75,7 @@
         </div>
         <div class="col-sm-6 col-lg-4">
             <div class="card corCards h-100 d-flex flex-column">
-                <div class="card-header">Vento</div>
+                <div class="card-header"><i class="bi bi-cloud-wind me-2"></i>Vento</div>
                 <div class="card-body">
                     <h5 id="velVento"></h5>
                     <h5 id="dirVento"></h5>
@@ -85,7 +84,7 @@
         </div>
         <div class="col-sm-6 col-lg-4">
             <div class="card corCards h-100 d-flex flex-column">
-                <div class="card-header">Ar</div>
+                <div class="card-header"><i class="bi bi-flag me-2"></i>Ar</div>
                 <div class="card-body">
                     <h5 id="umidadeAr"></h5>
                     <h5 id="pressaoAr"></h5>
@@ -94,7 +93,7 @@
         </div>
         <div class="col-sm-6 col-lg-4 ">
             <div class="card corCards h-100 d-flex flex-column">
-                <div class="card-header">Outros</div>
+                <div class="card-header"><i class="bi bi-vignette me-2"></i>Outros</div>
                 <div class="card-body">
                     <h5 id="coordenadas"></h5>
                     <h5 id="daylight_duration"></h5>
@@ -104,9 +103,8 @@
         </div>
     </div>
 
-    <footer id="footer" class="text-end p-2 text-body-tertiary"></footer>
+    <footer id="footer" class="text-end p-2 text-body-tertiary me-3"></footer>
     
-
     <script>
         // Chama a função assim que o HTML é carregado
         document.addEventListener("DOMContentLoaded", function() {

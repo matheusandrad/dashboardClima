@@ -104,7 +104,10 @@ function atualizaDuracaoDia(clima) {
     let minutos = Math.floor(restoSeg / 60);                    // Converte o resto em minutos
     let segundos = Math.floor(restoSeg % 60);                   // Converte o resto em minutos
     let duracaoDia = `${horas}h ${minutos}min ${segundos}s`     // Armazena os dados processados e formata de modo legível
-    document.getElementById('daylight_duration').textContent = `Duração da luz do dia: ${duracaoDia}`;
+
+
+    document.getElementById('daylight_duration').innerHTML = `<h5><i class="bi bi-brightness-alt-high-fill"></i> Duração da luz do dia: ${duracaoDia}</h5>`
+    // document.getElementById('daylight_duration').textContent = `Duração da luz do dia: ${duracaoDia}`;
 }
 
 function atualizaTemperaturaMax(clima) {
